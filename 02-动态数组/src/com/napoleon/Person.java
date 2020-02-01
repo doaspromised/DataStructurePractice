@@ -13,6 +13,10 @@ public class Person {
 	public String toString() {
 		return "Person [age=" + age + ", name=" + name + "]";
 	}
-	
-	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		Person person = (Person) obj;
+		return this.age == person.age;
+	}
 }
