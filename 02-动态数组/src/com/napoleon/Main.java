@@ -2,15 +2,16 @@ package com.napoleon;
 
 public class Main {
 	public static void main(String[] args) {
-		ArrayList<Person> persons = new ArrayList<>(10);
+//		java.util.ArrayList<E>
+		ArrayList<Object> persons = new ArrayList<>(10);
 //		list.add(11);
 //		list.add(22);
 //		list.add(33);
 //		list.add(44);
 //		list.set(1, 99);
-//		for (int i = 0; i < 100; i++) {
-//			list.add(i);
-//		}
+		for (int i = 0; i < 10; i++) {
+			persons.add(i);
+		}
 //		list.remove(9);
 //		list.add(list.size(), 100);
 		persons.add(new Person(10, "jack"));

@@ -91,7 +91,7 @@ public class ArrayList<E> {
 	 */
 	public void add(int index, E element) {
 		rangeCheckForAdd(index);
-		ensureCapacity();
+		ensureCapacity(size + 1);
 		for (int i = size; i > index; i--) {
 			elements[i] = elements[i - 1];
 		}
@@ -164,9 +164,10 @@ public class ArrayList<E> {
 		return ELEMENT_NOT_FOUND;
 	}
 	
-	private void ensureCapacity() {
-		if (size >= DEFAULT_CAPACITY && size == elements.length) {
-			int newCapacity = size + (size >> 1);
+	private void ensureCapacity(int capacity) {
+		int oldCapacity = elements.length;
+		if (oldCapacity < capacity) {
+			int newCapacity = oldCapacity + (oldCapacity >> 1);
 			E[] newElements = (E[]) new Object[newCapacity];
 			for (int i = 0; i < size; i++) {
 				newElements[i] = elements[i];
