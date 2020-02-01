@@ -135,9 +135,12 @@ public class ArrayList<E> {
 		for (int i = index; i < size - 1; i++) {
 			elements[i] = elements[i + 1];
 		}
-		elements[size] = null;
-		size--;
+		elements[--size] = null;
 		return removedElement;
+	}
+	
+	public void remove(E element) {
+	    remove(indexOf(element));
 	}
 
 	/**

@@ -12,11 +12,11 @@ public class Main {
 		for (int i = 0; i < 10; i++) {
 			persons.add(i);
 		}
-//		list.remove(9);
+		persons.remove(9);
 //		list.add(list.size(), 100);
-		persons.add(new Person(10, "jack"));
-		persons.add(new Person(11, "hiii"));
-		persons.add(new Person(12, "jiiis"));
+//		persons.add(new Person(10, "jack"));
+//		persons.add(new Person(11, "hiii"));
+//		persons.add(new Person(12, "jiiis"));
 		System.out.println(persons);
 	}
 }

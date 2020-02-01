@@ -16,7 +16,13 @@ public class Person {
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
-		Person person = (Person) obj;
-		return this.age == person.age;
+		if (obj == null) {
+			return false;
+		}
+		if (obj instanceof Person) {
+			Person person = (Person) obj;
+			return this.age == person.age;
+		}
+		return false;
 	}
 }
