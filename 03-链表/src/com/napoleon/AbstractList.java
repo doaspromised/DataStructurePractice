@@ -44,6 +44,15 @@ public abstract class AbstractList<E> implements List<E> {
 	 * @param element
 	 */
 	public void add(E element) {
+		/**
+		 * 往数组最后的地方添加元素  
+		 * 最好的情况 O(1) 
+		 * 最坏的情况是扩容的时候：O(n) 
+		 * 平均复杂度 是  O(1)
+		 * 绝大部分情况是 O(1)  
+		 * 均摊复杂度 O(1)
+		 * 
+		 */
 		add(size, element);
 	}
 	
