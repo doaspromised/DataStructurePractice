@@ -1,5 +1,7 @@
 package com.napoleon.cycle;
 
+import javax.xml.soap.Node;
+
 import com.napoleon.AbstractList;
 
 /**
@@ -17,7 +19,8 @@ public class CycleLinkedList<E> extends AbstractList<E> {
 
 	private Node<E> firstNode;
 	private Node<E> lastNode;
-
+	private Node<E> currentNode;
+	
 	private static class Node<E> {
 		E element;
 		Node<E> prevNode;
@@ -47,6 +50,31 @@ public class CycleLinkedList<E> extends AbstractList<E> {
 
 	}
 
+	public void reset() {
+		currentNode = firstNode;
+	}
+	
+	public E next() {
+		if (currentNode == null) {
+			return null;
+		}
+		currentNode = currentNode.nextNode;
+		return currentNode.element;
+	}
+	
+	public E remove() {
+		if (currentNode == null) {
+			return null;
+		}
+		Node<E> next = currentNode.nextNode;
+ 		E element = remove(currentNode);
+ 		if (size == 0) {
+			currentNode = null;
+		} else {
+			currentNode = next;
+		}
+ 		return element;
+	}
 	@Override
 	public void clear() {
 		size = 0;
@@ -100,21 +128,28 @@ public class CycleLinkedList<E> extends AbstractList<E> {
 	@Override
 	public E remove(int index) { 
 		rangeCheck(index);
-		Node<E> node = firstNode;
+		return remove(node(index));
+	}
+	
+	private E remove(Node<E> node) {
 		if (size == 1) {
 			firstNode = null;
 			lastNode = null;
-			return node.element;
+		} else {
+			Node<E> prev = node.prevNode;
+			Node<E> next = node.nextNode;
+			prev.nextNode = next;
+			next.prevNode = prev;
+			
+			if (node == firstNode) { // index == 0
+				firstNode = next;
+			}
+			
+			if (node == lastNode) { // index == size - 1
+				lastNode = prev;
+			}
 		}
-		node = node(index);
-		node.prevNode.nextNode = node.nextNode;
-		node.nextNode.prevNode = node.prevNode;
-		if (index == 0) { // index == 0
-			firstNode = node.nextNode;
-		}
-		if (index == size - 1) { // index == size - 1 
-			lastNode = node.prevNode;
-		}
+		
 		size--;
 		return node.element;
 	}
