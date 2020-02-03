@@ -1,4 +1,6 @@
-package com.napoleon;
+package com.napoleon.cycle;
+
+import com.napoleon.AbstractList;
 
 /**
  * 单向循环链表
@@ -9,7 +11,7 @@ package com.napoleon;
  *
  * @param <E>
  */
-public class SingleLinkedList<E> extends AbstractList<E> {
+public class SingleCycleLinkedList<E> extends AbstractList<E> {
 
 	private Node<E> firstNode;
 
@@ -58,7 +60,11 @@ public class SingleLinkedList<E> extends AbstractList<E> {
 	public void add(int index, E element) {// O(n)
 		rangeCheckForAdd(index);
 		if (index == 0) {
-			firstNode = new Node<>(element, firstNode);
+//			让最后一个节点的next 指定第一个节点
+			Node<E> newFirstNode = new Node<>(element, firstNode);
+			Node<E> lastNode = size == 0 ? newFirstNode : node(size - 1);
+			firstNode = newFirstNode;
+			lastNode.nextNode = firstNode;
 		} else {
 			Node<E> prev = node(index - 1);
 			prev.nextNode = new Node<>(element, prev.nextNode);
@@ -71,7 +77,14 @@ public class SingleLinkedList<E> extends AbstractList<E> {
 		rangeCheck(index);
 		Node<E> removedNode = firstNode; 
 		if (index == 0) {		
-			firstNode = firstNode.nextNode;
+//			让最后一个节点指定新的头结点
+			Node<E> lastNode = node(size - 1);
+			if (size == 1) {
+				firstNode = null;
+			} else {
+				firstNode = firstNode.nextNode;
+				lastNode.nextNode = firstNode;
+			}
 		} else {
 			Node<E> prevNode = node(index - 1);
 			removedNode = prevNode.nextNode;
