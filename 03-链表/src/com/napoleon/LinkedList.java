@@ -52,6 +52,7 @@ public class LinkedList<E> extends AbstractList<E> {
 
 	@Override
 	public E remove(int index) {
+		rangeCheck(index);
 		Node<E> removedNode = firstNode; 
 		if (index == 0) {		
 			firstNode = firstNode.nextNode;

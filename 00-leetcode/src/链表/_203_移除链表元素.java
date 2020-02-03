@@ -30,10 +30,20 @@ public class _203_移除链表元素 {
 		return sentineListNode.next;
 		
 	}
+	/**
+	 * 不采用哨兵节点方法
+	 * @param head
+	 * @param val
+	 * @return
+	 */
 	public ListNode removeElements2(ListNode head, int val) {
+//		判断头结点是否是要删除的元素节点
 		while (head != null && head.val == val) {
 			head = head.next;
 		}
+        if (head == null) {
+            return head;
+        }
 		// 非头结点
         ListNode prev = head, curr = head.next;
         while(curr != null) {
