@@ -1,4 +1,4 @@
-package com.napoleon;
+package com.napoleon.list;
 
 /**
  * 动态数组

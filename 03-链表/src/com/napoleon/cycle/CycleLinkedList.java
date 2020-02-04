@@ -50,10 +50,17 @@ public class CycleLinkedList<E> extends AbstractList<E> {
 
 	}
 
+	/**
+	 * 重置currentNode位置
+	 */
 	public void reset() {
 		currentNode = firstNode;
 	}
 	
+	/**
+	 * 移动 currentNode 到下一个节点
+	 * @return
+	 */
 	public E next() {
 		if (currentNode == null) {
 			return null;
@@ -62,6 +69,10 @@ public class CycleLinkedList<E> extends AbstractList<E> {
 		return currentNode.element;
 	}
 	
+	/**
+	 * 移除 currentNode 节点，并把currentNode移动到下一个节点
+	 * @return
+	 */
 	public E remove() {
 		if (currentNode == null) {
 			return null;
