@@ -8,6 +8,13 @@ public class CircleQueue<E> {
 	public CircleQueue() {
 		elements = (E[]) new Object[10];
 	}
+	public void cealr() {
+		size = 0;
+		for (int i = 0; i < size; i++) {
+			elements[index(i)] = null;
+		}
+		front = 0;
+	}
 	public int size() {
 		return size;
 	}

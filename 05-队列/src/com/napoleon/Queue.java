@@ -8,6 +8,9 @@ package com.napoleon;
  */
 public class Queue<E> {
 	private List<E> list = new LinkedList<>();
+	public void cealr() {
+		list.clear();
+	}
 	public int size() {
 		return list.size();
 	}
