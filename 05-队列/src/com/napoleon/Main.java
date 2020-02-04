@@ -13,8 +13,7 @@ public class Main {
 		}
 	}
 	
-	public static void main(String[] args) {
-		
+	static void testCirclrQueue() {
 		CircleQueue<Integer> queue = new CircleQueue<Integer>();
 		for (int i = 0; i < 10; i++) {
 			queue.enQueue(i);
@@ -28,6 +27,25 @@ public class Main {
 		System.out.println(queue);
 		while (!queue.isEmpty()) {
 			System.out.println(queue.deQueue());
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		CircleDeque<Integer> queue = new CircleDeque<Integer>();
+		for (int i = 0; i < 10; i++) {
+			queue.enQueueFont(i + 1);
+			queue.enQueueRear(i + 100);
+		}
+		for (int i = 0; i < 3; i++) {
+			queue.deQueueFront();
+			queue.deQueueRear();
+		}
+		queue.enQueueFont(11);
+		queue.enQueueFont(12);
+		System.out.println(queue);
+		while (!queue.isEmpty()) {
+			System.out.println(queue.deQueueFront());
 		}
 	}
 	
