@@ -87,11 +87,12 @@ public class CircleDeque<E> {
 	 * @return
 	 */
 	private int index(int index) {
+		int capacity = elements.length;
 		index += front;
 		if (index < 0) {
-			return index + elements.length;
+			return index + capacity;
 		}
-		return index % elements.length;
+		return index - (index >= capacity ? capacity : 0);
 	}
 	
 	private void ensureCapacity(int capacity) {

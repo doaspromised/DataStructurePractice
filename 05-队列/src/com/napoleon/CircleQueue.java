@@ -55,7 +55,14 @@ public class CircleQueue<E> {
 	 * @return
 	 */
 	private int index(int index) {
-		return (front + index) % elements.length;
+//		return (front + index) % elements.length;
+		// 模运算优化: 
+		// 尽量避免使用乘，除， 模，浮点数运算，效率低下。
+		// 已知：m > 0, n < 0
+		// n%m 等价于 n - (n >=m ? m : 0), 前提条件是： n < 2m
+		int capacity = elements.length;
+		index += front;
+		return index - (index >= capacity ? capacity : 0);
 	}
 	
 	private void ensureCapacity(int capacity) {

@@ -1,5 +1,12 @@
 package com.napoleon;
 
+/**
+ * % 运算优化
+ * 
+ * 尽量避免使用乘，除， 模，浮点数运算，效率低下。
+ * @author nickdada
+ *
+ */
 public class Main {
 
 	static void test() {
@@ -30,8 +37,7 @@ public class Main {
 		}
 	}
 	
-	public static void main(String[] args) {
-		
+	static void testCircleDeque() {
 		CircleDeque<Integer> queue = new CircleDeque<Integer>();
 		for (int i = 0; i < 10; i++) {
 			queue.enQueueFont(i + 1);
@@ -47,6 +53,12 @@ public class Main {
 		while (!queue.isEmpty()) {
 			System.out.println(queue.deQueueFront());
 		}
+	}
+	
+	public static void main(String[] args) {
+//		testCirclrQueue();
+		testCircleDeque();
+		
 	}
 	
 }
