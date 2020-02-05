@@ -19,7 +19,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 	}
 
 	public BinarySearchTree(Comparator<E> comparator) {
-		comparator = comparator;
+		this.comparator = comparator;
 	}
 
 	public int size() {
