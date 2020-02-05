@@ -14,5 +14,9 @@ public class Main {
 		bst.add(12);
 		bst.add(1);
 		BinaryTrees.println(bst);
+//		bst.preorderTranversal();
+//		bst.inorderTraversal();
+//		bst.postorderTranversal();
+		bst.levelOrderTraversal();
 	}
 }
