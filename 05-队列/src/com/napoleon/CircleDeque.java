@@ -15,10 +15,10 @@ public class CircleDeque<E> {
 		elements = (E[]) new Object[10];
 	}
 	public void cealr() {
-		size = 0;
 		for (int i = 0; i < size; i++) {
 			elements[index(i)] = null;
 		}
+		size = 0;
 		front = 0;
 	}
 	public int size() {
