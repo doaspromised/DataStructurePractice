@@ -174,6 +174,32 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 		}
 	}
 	
+	/**
+	 * 判断是否是完全二叉树
+	 * @return
+	 */
+	public boolean isCompelete() {
+		
+		Queue<Node<E>> queue = new LinkedList<>();
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			Node<E> node = queue.poll();
+			if (node.hasTwoChildren()) {
+				queue.offer(node.left);
+				queue.offer(node.right);
+			} else if (node.left == null && node.right != null) {
+				return false;
+			} else { // 后续节点必须是叶子节点
+				return node.isLeaf();
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * 利用层序遍历计算高度
+	 * @return
+	 */
 	public int height() {
 		if (root == null) {
 			return 0;
@@ -249,6 +275,13 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 		public Node(E element, Node<E> parent) {
 			this.element = element;
 			this.parent = parent;
+		}
+		
+		public boolean isLeaf() {
+			return left == null && right == null;
+		}
+		public boolean hasTwoChildren() {
+			return left != null && right != null;
 		}
 
 	}
