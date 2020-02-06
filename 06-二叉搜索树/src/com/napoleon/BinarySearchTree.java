@@ -12,7 +12,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 	private int size;
 	private Node<E> root;
 	private Comparator<E> comparator;
-
+	
 	public BinarySearchTree() {
 		// TODO Auto-generated constructor stub
 		this(null);
@@ -138,15 +138,33 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 	/**
 	 * 使用队列进行层序遍历
 	 */
-	public void levelOrderTraversal() {
-		if (root == null) {
+//	public void levelOrderTraversal() {
+//		if (root == null) {
+//			return;
+//		}
+//		Queue<Node<E>> queue = new LinkedList<>();
+//		queue.offer(root);
+//		while (!queue.isEmpty()) {
+//			Node<E> node = queue.poll();
+//			System.out.println(node.element);
+//			if (node.left != null) {
+//				queue.offer(node.left);
+//			}
+//			if (node.right != null) {
+//				queue.offer(node.right);
+//			}
+//		}
+//	}
+	public void levelOrder(Visitor<E> visitor) {
+		if (root == null || visitor == null) {
 			return;
 		}
 		Queue<Node<E>> queue = new LinkedList<>();
 		queue.offer(root);
 		while (!queue.isEmpty()) {
 			Node<E> node = queue.poll();
-			System.out.println(node.element);
+//			System.out.println(node.element);
+			visitor.visit(node.element);
 			if (node.left != null) {
 				queue.offer(node.left);
 			}
@@ -154,6 +172,48 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 				queue.offer(node.right);
 			}
 		}
+	}
+	
+	public int height() {
+		if (root == null) {
+			return 0;
+		}
+		int height = 0;
+		int levelSize = 1;
+		Queue<Node<E>> queue = new LinkedList<>();
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			Node<E> node = queue.poll();
+			levelSize--;
+//			System.out.println(node.element);
+			if (node.left != null) {
+				queue.offer(node.left);
+			}
+			if (node.right != null) {
+				queue.offer(node.right);
+			}
+			if (levelSize == 0) {
+				levelSize = queue.size();
+				height++;
+			}
+		}
+		return height;
+	}
+	
+	/**
+	 * 递归获取树的高度
+	 * @return
+	 */
+	public int height2() {
+		
+		return height(root);
+	}
+	
+	private int height(Node<E> node) {
+		if (node == null) {
+			return 0;
+		}
+		return 1 + Math.max(height(node.left), height(node.right));
 	}
 
 	/**
@@ -176,7 +236,10 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 			throw new IllegalArgumentException("element must not be null");
 		}
 	}
-
+	
+	public static interface Visitor<E> {
+		void visit(E element);
+	}
 	private static class Node<E> {
 		E element;
 		Node<E> left;

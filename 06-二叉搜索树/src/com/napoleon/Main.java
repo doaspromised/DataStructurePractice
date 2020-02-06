@@ -1,5 +1,6 @@
 package com.napoleon;
 
+import com.napoleon.BinarySearchTree.Visitor;
 import com.napoleon.printer.BinaryTrees;
 
 public class Main {
@@ -13,10 +14,18 @@ public class Main {
 		}
 		bst.add(12);
 		bst.add(1);
-		BinaryTrees.println(bst);
+//		BinaryTrees.println(bst);
 //		bst.preorderTranversal();
 //		bst.inorderTraversal();
 //		bst.postorderTranversal();
-		bst.levelOrderTraversal();
+//		bst.levelOrderTraversal();
+//		bst.levelOrder(new Visitor<Integer>() {
+//			@Override
+//			public void visit(Integer element) {
+//				// TODO Auto-generated method stub
+//				System.out.println(element);
+//			}
+//		});
+		System.out.println(bst.height());
 	}
 }
