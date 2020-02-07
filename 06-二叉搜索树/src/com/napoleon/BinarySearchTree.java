@@ -29,6 +29,10 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 	public boolean isEmpty() {
 		return size == 0;
 	}
+	
+	public void clear() {
+		root = null;
+	}
 
 	public void add(E element) {
 		elementNotNullCheck(element);
@@ -66,11 +70,68 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 	}
 
 	public void remove(E element) {
-
+		  remove(node(element));
+	}
+	
+	private void remove(Node<E> node) {
+		if (node == null) {
+			return;
+		}
+//		删除度为2的节点
+		if (node.hasTwoChildren()) {
+			Node<E> s = successor(node);
+			// 把后继节点的值赋值给被删除的节点
+			node.element = s.element;
+			// 删除后继节点（度为2的节点的后继节点的度必定为1或者0）
+			node = s;
+		}
+//		删除度为1或者0的节点
+		if (node.isLeaf()) {
+//			如果是叶子节点，度为0
+			if (node.parent == null) {
+				root = null;
+			} else if (node == node.parent.left) {
+				node.parent.left = null;
+			} else {
+				node.parent.right = null;
+			}
+		} else {
+			Node<E> replacement  = node.left != null ? node.left : node.right;
+			replacement.parent = node.parent;
+//			如果不是叶子节点，度为1
+			if (node.parent == null) {// node 是根节点并且是度为1的几点
+				node = replacement;
+			} else if (node == node.parent.left) {
+				node.parent.left = replacement;
+			} else {
+				node.parent.right = replacement;
+			}
+		}
+	}
+	
+	private Node<E> node(E element) {
+		Node<E> node = root;
+		while (node != null) {
+			int cmp = compare(element, node.element);
+			if (cmp == 0) {
+				return node;
+			}
+			if (cmp > 0) {
+				node = node.right;
+			} else {
+				node = node.left;
+			}
+		}
+		return null;
 	}
 
+	/**
+	 * 是否包含某元素
+	 * @param element
+	 * @return
+	 */
 	public boolean contains(E element) {
-		return false;
+		return node(element) != null;
 	}
 
 	/**
