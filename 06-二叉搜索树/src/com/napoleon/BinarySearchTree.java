@@ -262,7 +262,57 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 			throw new IllegalArgumentException("element must not be null");
 		}
 	}
-	
+	/**
+	 * 寻找指定节点的前驱节点（中序遍历时的前一个节点）
+	 * 
+	 * @param node 
+	 * @return
+	 */
+	private Node<E> predecessor(Node<E> node) {
+		if (node == null) {
+			return null;
+		}
+//		从前驱节点的左子树当中寻找（left.right.right...）
+		Node<E> p = node.left;
+		if (p != null) {
+			while (p.right != null) {
+				p = p.right;
+			}
+			return p;
+		}
+//		从父节点祖父节点中寻找
+		while (node.parent != null && node == node.parent.left) {
+			node = node.parent;
+		}
+//		node.parent == null
+//		node == node.parent.right
+		return node.parent;
+	}
+	/**
+	 * 寻找指定节点的后继节点(中序遍历时的后一个节点)
+	 * @param node
+	 * @return
+	 */
+	private Node<E> successor(Node<E> node)	{
+		if (node == null) {
+			return null;
+		}
+//		从右子树中寻找（right.left.left..）
+		Node<E> s = node.right;
+		if (s != null) {
+			while (s.left != null) {
+				s = s.left;
+			}
+			return s;
+		}
+//		寻找父节点，并当前节点是父节点的左子树
+		while (node.parent != null && node == node.parent.right) {
+			node = node.parent;
+		}
+		
+		return node.parent;
+		
+ 	}
 	public static interface Visitor<E> {
 		void visit(E element);
 	}
