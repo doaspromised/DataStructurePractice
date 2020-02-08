@@ -17,7 +17,29 @@ public class AVLTree<E> extends BinarySearchTree<E> {
 	}
 
 	/**
+	 * 删除节点后的操作
+	 * 
+	 * 删除节点后可能会导致祖父节点或祖先节点失衡（只有一个节点会失衡）
+	 * 只让父节点平衡后，可能会导致更高层的祖父节点失衡（最多只需要O(logn)次调整)
+	 */
+	@Override
+	protected void afterRemove(Node<E> node) {
+		while ((node = node.parent) != null) {
+			if (isBalance(node)) {
+				// 更新高度
+				updateHeight(node);
+			} else {
+				// 恢复平衡
+				// 删除节点后，调整后，可能会导致更远的祖先节点失衡。所以恢复平衡要检查所有的祖先节点是否失衡
+				rebalance(node);
+			}
+		}
+	}
+	/**
 	 * 添加节点后的操作
+	 * 
+	 * 添加节点之后，可能会导致所有的祖父节点失衡
+	 * 只要让高度最低的失衡节点恢复平衡，整棵树就恢复平衡（仅需要O(1)的调整)
 	 */
 	@Override
 	protected void afterAdd(Node<E> node) {

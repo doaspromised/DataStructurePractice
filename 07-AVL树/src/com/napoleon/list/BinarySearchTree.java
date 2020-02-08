@@ -73,10 +73,15 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
 	/**
 	 * 添加node之后的调整
 	 */
-	protected void afterAdd(Node<E> node) {
-		
-	}
-	
+	protected void afterAdd(Node<E> node) {}
+	/**
+	 * 删除node之后的调整
+	 */
+	protected void afterRemove(Node<E> node) {}
+	/**
+	 * 删除节点
+	 * @param node
+	 */
 	private void remove(Node<E> node) {
 		if (node == null) {
 			return;
@@ -111,6 +116,7 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
 				node.parent.right = replacement;
 			}
 		}
+		afterRemove(node);
 	}
 	
 	private Node<E> node(E element) {

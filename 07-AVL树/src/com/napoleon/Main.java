@@ -8,7 +8,7 @@ import com.napoleon.printer.BinaryTrees;
 @SuppressWarnings("unused")
 public class Main {
 	
-	public void testAVLTree() {
+	public static void testAVLTree() {
 		Integer data[] = new Integer[] {
 				1, 4, 10, 11, 12, 13, 14, 20, 21, 23, 27, 36, 41, 49, 55, 60, 66, 67, 68, 69, 73, 78, 86, 91, 92, 95
 		};
@@ -19,14 +19,29 @@ public class Main {
 		BinaryTrees.println(bst);
 	}
 	
-	public static void main(String[] args) {
+	public static void testAVLRemove() {
 		Integer data[] = new Integer[] {
-				1, 4, 10, 11, 12, 13, 14, 20, 21, 23, 27, 36, 41, 49, 55, 60, 66, 67, 68, 69, 73, 78, 86, 91, 92, 95
+				58, 68, 11, 66, 76, 28, 5, 21, 54, 30, 25, 82, 67
 		};
 		AVLTree<Integer> bst = new AVLTree<>();
 		for (int i = 0; i < data.length; i++) {
 			bst.add(data[i]);
 		}
+//		bst.remove(99);
+//		bst.remove(85);
+//		bst.remove(95);
+		bst.remove(25);
+		BinaryTrees.println(bst);
+	}
+	
+	public static void main(String[] args) {
+//		Integer data[] = new Integer[] {
+//				1, 4, 10, 11, 12, 13, 14, 20, 21, 23, 27, 36, 41, 49, 55, 60, 66, 67, 68, 69, 73, 78, 86, 91, 92, 95
+//		};
+//		AVLTree<Integer> bst = new AVLTree<>();
+//		for (int i = 0; i < data.length; i++) {
+//			bst.add(data[i]);
+//		}
 //		bst.add(12);
 //		bst.add(1);
 //		bst.remove(1);
@@ -34,8 +49,8 @@ public class Main {
 //		bst.remove(12);
 //		bst.remove(9);
 //		bst.remove(7);
-//		bst.remove(11);
-		BinaryTrees.println(bst);
+//		bst.remove(60);
+//		BinaryTrees.println(bst);
 //		bst.preorderTranversal();
 //		bst.inorderTraversal();
 //		bst.postorderTranversal();
@@ -49,5 +64,6 @@ public class Main {
 //		});
 //		System.out.println(bst.height());
 //		System.out.println(bst.isCompelete());
+		testAVLRemove();
 	}
 }
