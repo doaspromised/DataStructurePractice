@@ -38,13 +38,67 @@ public class AVLTree<E> extends BinarySearchTree<E> {
 	protected Node<E> createNode(E element, Node<E> parent) {
 		return new AVLNode(element, parent);
 	}
-
 	/**
 	 * 恢复平衡
 	 * 
 	 * @param node
 	 */
 	private void rebalance(Node<E> grand) {
+		Node<E> parent = ((AVLNode<E>) grand).tallerChild();
+		Node<E> node = ((AVLNode<E>) parent).tallerChild();
+		if (parent.isLeftChild()) { // L
+			if (node.isLeftChild()) { // LL
+				rotate(grand, node.left, node, node.right, parent, parent.right, grand, grand.right);
+			} else { // LR
+				rotate(grand, parent.left, parent, node.left, node, node.right, grand, grand.right);
+			}
+		} else { // R
+			if (node.isLeftChild()) { // RL
+				rotate(grand, grand.left, grand, node.left, node, node.right, parent, parent.right);
+			} else { // RR
+				rotate(grand, grand.left, grand, parent.left, parent, node.left, node, node.right);
+			}
+		}
+	}
+	
+	private void rotate(
+			Node<E> r, // 子树根节点
+			Node<E> a, Node<E> b, Node<E> c, 
+			Node<E> d,
+			Node<E> e, Node<E> f, Node<E> g) {
+		d.parent = r.parent;
+		if (r.isLeftChild()) {
+			r.parent.left = d;
+		} else if (r.isRightChild()) {
+			r.parent.right = d;
+		} else {
+			root = d;
+		}
+//		a-b-c
+		b.left = a;
+		b.right = c;
+		if (a != null) a.parent = b;
+		if (c != null) c.parent = b;
+		updateHeight(b);
+//		e-f-g
+		f.left = e;
+		f.right = g;
+		if (e != null) e.parent = f;
+		if (g != null) g.parent = f;
+		updateHeight(f);
+//		b-d-f
+		d.left = b;
+		d.right = f;
+		b.parent = d;
+		f.parent = d;
+		updateHeight(d);
+	}
+	/**
+	 * 恢复平衡
+	 * 
+	 * @param node
+	 */
+	private void rebalance2(Node<E> grand) {
 		Node<E> parent = ((AVLNode<E>) grand).tallerChild();
 		Node<E> node = ((AVLNode<E>) parent).tallerChild();
 		if (parent.isLeftChild()) { // L
