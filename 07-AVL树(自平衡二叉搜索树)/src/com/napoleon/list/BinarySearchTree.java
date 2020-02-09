@@ -10,7 +10,7 @@ import com.napoleon.printer.BinaryTreeInfo;
 public class BinarySearchTree<E> extends BinaryTree<E> {
 
 	private Comparator<E> comparator;
-	
+
 	public BinarySearchTree() {
 		// TODO Auto-generated constructor stub
 		this(null);
@@ -56,9 +56,10 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
 		size++;
 		afterAdd(newNode);
 	}
-	
+
 	/**
 	 * 是否包含某元素
+	 * 
 	 * @param element
 	 * @return
 	 */
@@ -67,19 +68,23 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
 	}
 
 	public void remove(E element) {
-		  remove(node(element));
+		remove(node(element));
 	}
-	
+
 	/**
 	 * 添加node之后的调整
 	 */
-	protected void afterAdd(Node<E> node) {}
+	protected void afterAdd(Node<E> node) {
+	}
+
 	/**
 	 * 删除node之后的调整
 	 */
-	protected void afterRemove(Node<E> node) {}
+	protected void afterRemove(Node<E> node) {
+	}
 	/**
 	 * 删除节点
+	 * 
 	 * @param node
 	 */
 	private void remove(Node<E> node) {
@@ -94,31 +99,39 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
 			// 删除后继节点（度为2的节点的后继节点的度必定为1或者0）
 			node = s;
 		}
-//		删除度为1或者0的节点
-		if (node.isLeaf()) {
-//			如果是叶子节点，度为0
-			if (node.parent == null) {
-				root = null;
-			} else if (node == node.parent.left) {
-				node.parent.left = null;
-			} else {
-				node.parent.right = null;
-			}
-		} else {
-			Node<E> replacement  = node.left != null ? node.left : node.right;
+		// 删除node节点（node的度必然是1或者0）
+		Node<E> replacement = node.left != null ? node.left : node.right;
+		if (replacement != null) { // node是度为1的节点
+			// 更改parent
 			replacement.parent = node.parent;
-//			如果不是叶子节点，度为1
-			if (node.parent == null) {// node 是根节点并且是度为1的几点
-				node = replacement;
+			// 更改parent的left、right的指向
+			if (node.parent == null) { // node是度为1的节点并且是根节点
+				root = replacement;
 			} else if (node == node.parent.left) {
 				node.parent.left = replacement;
-			} else {
+			} else { // node == node.parent.right
 				node.parent.right = replacement;
 			}
+
+			// 删除节点之后的处理
+			afterRemove(node);
+		} else if (node.parent == null) { // node是叶子节点并且是根节点
+			root = null;
+
+			// 删除节点之后的处理
+			afterRemove(node);
+		} else { // node是叶子节点，但不是根节点
+			if (node == node.parent.left) {
+				node.parent.left = null;
+			} else { // node == node.parent.right
+				node.parent.right = null;
+			}
+
+			// 删除节点之后的处理
+			afterRemove(node);
 		}
-		afterRemove(node);
 	}
-	
+
 	private Node<E> node(E element) {
 		Node<E> node = root;
 		while (node != null) {

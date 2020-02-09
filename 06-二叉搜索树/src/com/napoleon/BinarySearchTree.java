@@ -225,7 +225,10 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 		while (!queue.isEmpty()) {
 			Node<E> node = queue.poll();
 //			System.out.println(node.element);
-			visitor.visit(node.element);
+			if (visitor.visit(node.element)) {
+				// 用户决定停止遍历
+				return;
+			}
 			if (node.left != null) {
 				queue.offer(node.left);
 			}
@@ -240,18 +243,23 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 	 * @return
 	 */
 	public boolean isCompelete() {
-		
 		Queue<Node<E>> queue = new LinkedList<>();
 		queue.offer(root);
+		boolean leaf = false;
 		while (!queue.isEmpty()) {
 			Node<E> node = queue.poll();
-			if (node.hasTwoChildren()) {
-				queue.offer(node.left);
-				queue.offer(node.right);
-			} else if (node.left == null && node.right != null) {
+			if (leaf && !node.isLeaf()) {
 				return false;
-			} else { // 后续节点必须是叶子节点
-				return node.isLeaf();
+			}
+			if (node.left != null) {
+				queue.offer(node.left);
+			} else if (node.right != null) {
+				return false;
+			}
+			if (node.right != null) {
+				queue.offer(node.right);
+			} else {
+				leaf = true;
 			}
 		}
 		return true;
@@ -375,7 +383,11 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 		
  	}
 	public static interface Visitor<E> {
-		void visit(E element);
+		/**
+		 * @param element
+		 * @return 如果返回true 就停止遍历；（让使用者决定遍历是否停止）
+		 */
+		boolean visit(E element);
 	}
 	private static class Node<E> {
 		E element;
