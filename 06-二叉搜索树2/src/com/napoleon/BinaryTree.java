@@ -2,6 +2,8 @@ package com.napoleon;
 
 import java.util.LinkedList;
 import java.util.Queue;
+
+import com.napoleon.BinarySearchTree.Node;
 import com.napoleon.printer.BinaryTreeInfo;
 
 public class BinaryTree<E> implements BinaryTreeInfo {
@@ -25,18 +27,23 @@ public class BinaryTree<E> implements BinaryTreeInfo {
 	 * @return
 	 */
 	public boolean isCompelete() {
-		
 		Queue<Node<E>> queue = new LinkedList<>();
 		queue.offer(root);
+		boolean leaf = false;
 		while (!queue.isEmpty()) {
 			Node<E> node = queue.poll();
-			if (node.hasTwoChildren()) {
-				queue.offer(node.left);
-				queue.offer(node.right);
-			} else if (node.left == null && node.right != null) {
+			if (leaf && !node.isLeaf()) {
 				return false;
-			} else { // 后续节点必须是叶子节点
-				return node.isLeaf();
+			}
+			if (node.left != null) {
+				queue.offer(node.left);
+			} else if (node.right != null) {
+				return false;
+			}
+			if (node.right != null) {
+				queue.offer(node.right);
+			} else {
+				leaf = true;
 			}
 		}
 		return true;
